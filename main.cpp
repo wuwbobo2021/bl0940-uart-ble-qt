@@ -16,21 +16,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     installTranslator(app);
 
+    BleSerial bleSerial("00:E0:02:12:00:54");
+    Bl0940Handler* bl0940Handler = createBl0940Handler(&bleSerial);
+
     MainWindow win;
-
-    DeviceHandler deviceHandler;
-    Bl0940Handler* bl0940Handler = createBl0940Handler(&deviceHandler);
-
-    bl0940Handler->connect(bl0940Handler, &Bl0940Handler::readElecData,
-                           &win, &MainWindow::receivedElecData,
-                           Qt::BlockingQueuedConnection);
-
-    deviceHandler.startScan();
-    deviceHandler.connect(&deviceHandler, &DeviceHandler::bleDeviceNotFound,
-                          &deviceHandler, &DeviceHandler::startScan);
-    deviceHandler.connect(&deviceHandler, &DeviceHandler::bleDisconnected,
-                          &deviceHandler, &DeviceHandler::startScan);
-
+    win.setBl0940(bl0940Handler);
     win.show();
     return app.exec();
 }

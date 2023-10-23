@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "bl0940.h"
+#include "bl0940handler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,15 +14,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void setBl0940(Bl0940Handler* handler);
     ~MainWindow();
 
-public slots:
+private slots:
+    void deviceConnected();
+    void deviceConnectionFailed();
+    void deviceDisconnected();
     void receivedElecData(BL0940 blData);
 
-signals:
-    void buttonScanClicked();
+    void uiParamChanged();
 
 private:
     Ui::MainWindow *ui;
+    Bl0940Handler* m_handler;
 };
 #endif // MAINWINDOW_H

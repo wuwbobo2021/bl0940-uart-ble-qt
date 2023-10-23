@@ -38,8 +38,8 @@ else()
         add_library(bl0940-uart-ble-qt SHARED
             ${PROJECT_SOURCES}
 	    bl0940.h bl0940.c
-            devicehandler.h devicehandler.cpp
             bl0940handler.h bl0940handler.cpp
+	    bleserial.h bleserial.cpp
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
